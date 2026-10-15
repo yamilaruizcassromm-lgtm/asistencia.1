@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Asistencia e Inventario de Alumnos</title>
+    <!-- Enlace al archivo CSS independiente -->
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <h1><i class="fa-solid fa-clipboard-user"></i> Control de Asistencia</h1>
+            <span id="conexion-estado" class="badge-estado warning">
+                <i class="fa-solid fa-circle"></i> Conectando...
+            </span>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <!-- Columna Izquierda: Pase de Lista y Registro -->
+        <section class="columna-principal">
+            
+            <!-- Sección: Pase de Lista del Día -->
+            <div class="card">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-list-check text-indigo"></i> Tomar Asistencia</h2>
+                    <div class="fecha-wrapper">
+                        <label for="fecha-asistencia">Fecha:</label>
+                        <input type="date" id="fecha-asistencia">
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Alumno</th>
+                                <th class="text-center">Estado (Presente / Ausente)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-asistencia-body">
+                            <!-- Los alumnos se cargan dinámicamente aquí -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer">
+                    <button id="btn-guardar-asistencia" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar Asistencia de la Fecha
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sección: Listado y Gestión de Alumnos (Abajo) -->
+            <div class="card">
+                <h2><i class="fa-solid fa-users text-indigo"></i> Listado y Gestión de Alumnos</h2>
+                
+                <form id="form-alumno" class="form-inline">
+                    <input type="text" id="nombre-alumno" placeholder="Nombre completo del nuevo alumno..." required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-user-plus"></i> Agregar Alumno
+                    </button>
+                </form>
+
+                <div class="table-responsive mt-4">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre del Alumno</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-alumnos-gestion">
+                            <!-- Los alumnos y botón de eliminar se muestran aquí abajo -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Columna Derecha: Historial Visible de Asistencias y Exportación -->
+        <section class="columna-lateral">
+            <div class="card sticky-card">
+                <div class="card-header-flex mb-3">
+                    <h2><i class="fa-solid fa-clock-rotate-left text-indigo"></i> Historial</h2>
+                    <!-- Botón para Exportar a CSV/Excel -->
+                    <button id="btn-exportar" class="btn btn-excel" title="Descargar registros en formato CSV compatible con Excel">
+                        <i class="fa-solid fa-file-excel"></i> Exportar
+                    </button>
+                </div>
+                
+                <div id="historial-contenedor" class="historial-scroll">
+                    <p class="text-muted text-center">Cargando historial...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Script principal de la aplicación -->
+    <script src="app.js"></script>
+</body>
+</html>
